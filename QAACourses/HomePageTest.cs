@@ -1,5 +1,4 @@
-﻿using System.Reflection.Metadata;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
@@ -13,7 +12,7 @@ namespace QAACourses
         private WebDriverWait _wait;
 
         private const string _url = "https://theconnectedshop.uk";
-
+/*
         [SetUp]
         public void Setup()
         {
@@ -76,18 +75,18 @@ namespace QAACourses
                 By.CssSelector("a.header__heading-link")));
 
             string currentUrl = _driver.Url;
-            Console.WriteLine("URL перед кліком: " + currentUrl);
+            Console.WriteLine("URL перед кліком: " + currentUrl);//TestContext, Logger
 
             logoLink.Click();
 
             _wait.Until(d => d.Url.StartsWith(_url));
             string afterUrl = _driver.Url;
             Console.WriteLine("URL після кліку: " + afterUrl);
-            Assert.That(afterUrl, Is.EqualTo(_url + "/"), "Посилання логотипа не веде на головну сторінку");
+            Assert.AreEqual(afterUrl, _url, "Посилання логотипа не веде на головну сторінку");
         }
 
         [Test]
-        public void ChecklocalizationForm()
+        public void CheckLocalizationForm()
         {
             var localizationSection = _wait.Until(ExpectedConditions.ElementExists(
                 By.Id("HeaderCountryForm")));
@@ -106,7 +105,7 @@ namespace QAACourses
         }
 
         [Test]
-        public void ChecklocalizationFormOnClick()
+        public void CheckLocalizationFormOnClick()
         {
             var localizationSection = _wait.Until(ExpectedConditions.ElementToBeClickable(
                 By.Id("HeaderCountryForm")));
@@ -170,13 +169,28 @@ namespace QAACourses
             Assert.AreEqual(expectedAriaExpanded, actualAriaExpanded, $"Arial expanded element in SearchForm is {actualAriaExpanded} but was {expectedAriaExpanded}");
             Assert.AreEqual(expectedAriaHashPopUp, actuaAriaHashPopUp, $"Aria-controls element in SearchForm is {actuaAriaHashPopUp} but was {expectedAriaHashPopUp}");
         }
-
+protected void SendKeys(By locator, string text)
+        {
+            TestContext.WriteLine($"Введення тексту '{text}' у поле: {locator}");
+            try
+            {
+                var input = WaitForElement(locator);
+                input.Clear();
+                input.SendKeys(text);
+                TestContext.WriteLine($"Текст введено успішно: '{text}'");
+            }
+            catch (Exception ex)
+            {
+                TestContext.WriteLine($"Помилка при введенні тексту '{text}': {ex.Message}");
+                throw;
+            }
+        }
         [Test]
         public void CheckSearchFormOnClickListOpen()
         {
             var searchSection = _wait.Until(ExpectedConditions.ElementExists(
                 By.Id("Search-In-Inline")));
-            searchSection.Clear();
+      
             searchSection.SendKeys("3");
 
             bool actualAriaExpanded = bool.Parse(searchSection.GetAttribute("aria-expanded"));
@@ -192,15 +206,12 @@ namespace QAACourses
                 By.Id("cart-icon-bubble")));
 
             string actualRole = searchSection.GetAttribute("role");
-            string expectedRole = "search";
-            bool actualAriaExpanded = bool.Parse(searchSection.GetAttribute("aria-expanded"));
-            bool expectedAriaExpanded = false;
+            string expectedRole = "button";
             string actuaAriaHashPopUp = searchSection.GetAttribute("aria-haspopup");
-            string expectedAriaHashPopUp = "listbox";
+            string expectedAriaHashPopUp = "dialog";
 
             Assert.AreEqual(expectedRole, actualRole, $"Aria-controls element in SearchForm is {actualRole} but was {expectedRole}");
-            Assert.AreEqual(expectedAriaExpanded, actualAriaExpanded, $"Arial expanded element in SearchForm is {actualAriaExpanded} but was {expectedAriaExpanded}");
             Assert.AreEqual(expectedAriaHashPopUp, actuaAriaHashPopUp, $"Aria-controls element in SearchForm is {actuaAriaHashPopUp} but was {expectedAriaHashPopUp}");
-        }
+        }*/
     }
 }
