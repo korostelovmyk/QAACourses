@@ -7,11 +7,12 @@ using SeleniumExtras.WaitHelpers;
 
 namespace QAACourses.Tests;
 
-public class HomPageTests
+public class HomePageTests
 {
     private IWebDriver _driver;
     private HomePage _homePage;
     private BasePage _basePage;
+private SearchPage _searchPage;
 
     private WebDriverWait _wait;
 
@@ -22,9 +23,10 @@ public class HomPageTests
     [SetUp]
     public void Setup()
     {
-        _driver = DriveFactory.CreateDriver();
+        _driver = DriverFactory.CreateDriver();
         _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
         _homePage = new HomePage(_driver);
+        _searchPage = new SearchPage(_driver);
         _homePage.Open();
     }
 
@@ -155,7 +157,7 @@ public class HomPageTests
     {
         var searchSection = _homePage.GetSearchInput();
 
-        _homePage.SearchText("smart");
+        _searchPage.SearchText("smart");
 
         bool actualAriaExpanded = bool.Parse(searchSection.GetAttribute("aria-expanded"));
         bool expectedAriaExpanded = true;
