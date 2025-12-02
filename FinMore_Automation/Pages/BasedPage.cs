@@ -89,5 +89,53 @@ namespace FinMore_Automation.Pages
             SendKeys(locator, valueToType);
             return GetAttribute(locator, Constants.ATTRIBUTE_VALUE);
         }
+
+        public void SaveToLocalStorage(string key, string value)
+    {
+        IJavaScriptExecutor js = (IJavaScriptExecutor)_driver;
+        js.ExecuteScript($"window.localStorage.setItem('{key}', '{value}');");
+    }
+ 
+   
+    public string GetFromLocalStorage(string key)
+    {
+        IJavaScriptExecutor js = (IJavaScriptExecutor)_driver;
+        return (string)js.ExecuteScript($"return window.localStorage.getItem('{key}');");
+    }
+ 
+   
+    public void ClearLocalStorage()
+    {
+        IJavaScriptExecutor js = (IJavaScriptExecutor)_driver;
+        js.ExecuteScript("window.localStorage.clear();");
+    }
+ 
+    
+    public void SaveUserToLocalStorage(UserModel user)
+    {
+        IJavaScriptExecutor js = (IJavaScriptExecutor)_driver;
+
+        js.ExecuteScript($"window.localStorage.setItem('userName', '{user.Name}');");
+        js.ExecuteScript($"window.localStorage.setItem('userEmail', '{user.Email}');");
+        js.ExecuteScript($"window.localStorage.setItem('userCurrency', '{user.Currency}');");
+        js.ExecuteScript($"window.localStorage.setItem('userCreatedAt', '{user.CreatedAt:yyyy-MM-ddTHH:mm:ss.fffZ}');");
+        if (!string.IsNullOrEmpty(user.Token))
+        {
+            js.ExecuteScript($"window.localStorage.setItem('authToken', '{user.Token}');");
+        }
+    }
+ 
+    
+    public bool IsUserLoggedIn()
+    {
+        string token = GetFromLocalStorage("authToken");
+        return !string.IsNullOrEmpty(token);
+    }
+ 
+    
+    public string GetAuthToken()
+    {
+        return GetFromLocalStorage("authToken");
+    }
     }
 }

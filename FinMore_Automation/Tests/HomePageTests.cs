@@ -85,18 +85,4 @@ public class HomePageTests
 
         Assert.That(actualAttributeValue, Is.EqualTo(testEmail), $"Login email input value {actualAttributeValue} is not equal to test email '{testEmail}'.");
     }
-/*
-    [Test]
-    public void CheckLogin()
-    {
-        UserModel localStorage = _homePage.GetLastUserDataFromLocalStorage();
-        string testEmail = localStorage.Email;
-        string password = Constants.TEST_PASSWORD;
-
-        _homePage.UserLogin(testEmail, password);
-
-     
-        Assert.That(_appContainer.IsAppContainerPageVisible(), Is.True, $"AppContainer page was not displayed after registration.");
-    }
-    */
 }

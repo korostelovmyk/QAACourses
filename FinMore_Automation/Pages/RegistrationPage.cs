@@ -5,6 +5,7 @@ using FinMore_Automation.Framework;
 using System.Diagnostics;
 using Newtonsoft.Json;
 using FinMore_Automation.Models;
+using NUnit.Framework.Internal;
 
 namespace FinMore_Automation.Pages;
 
@@ -122,7 +123,7 @@ public class RegistrationPage : BasePage
     }
 
     public void UserRegistration(string fullName, string email, string password, string currency)
-    {
+    {    
         By currencyLocator = GetLocatorByCurrency(currency);
 
         SendKeys(RegistrationFullNameInput, fullName);

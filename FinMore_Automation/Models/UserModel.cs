@@ -18,4 +18,6 @@ public class UserModel
     public DateTime CreatedAt { get; set; }
     
     public bool IsAuthenticated { get; set; }
+
+    public string Token {get; set; }
 }
