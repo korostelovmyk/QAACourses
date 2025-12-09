@@ -1,0 +1,43 @@
+name: Selenium Tests
+ 
+on:
+
+  push:
+
+    branches: [ "main" ]
+
+  pull_request:
+ 
+jobs:
+
+  test:
+
+    runs-on: ubuntu-latest
+ 
+    steps:
+
+      - name: Checkout
+
+        uses: actions/checkout@v4
+ 
+      - name: Setup .NET
+
+        uses: actions/setup-dotnet@v4
+
+        with:
+
+          dotnet-version: '8.0.x'
+ 
+      - name: Install Chrome
+
+        uses: browser-actions/setup-chrome@v1
+ 
+      - name: Install dependencies
+
+        run: dotnet restore
+ 
+      - name: Run tests
+
+        run: dotnet test --logger "trx;LogFileName=TestResults.trx"
+
+ 
